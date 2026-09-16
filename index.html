@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0d0f">
+<title>Mchimbaji Smart V2</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#080a0c;
+  color:#eee;
+}
+header{
+  background:#101419;
+  border-bottom:1px solid #292e34;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.logo{font-size:21px;font-weight:bold;color:#e7b94f}
+.sub{font-size:12px;color:#8d969f;margin-top:4px}
+.container{padding:14px;max-width:700px;margin:auto}
+.card{
+  background:#11161b;
+  border:1px solid #282e35;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.card h3{margin:0 0 12px;color:#e7b94f}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.stat{
+  background:#171c21;
+  border-radius:12px;
+  padding:13px;
+  border:1px solid #282e35;
+}
+.stat small{color:#929aa3}
+.stat b{display:block;font-size:22px;margin-top:6px}
+button{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:13px;
+  margin-top:8px;
+  background:#d9a62e;
+  color:#111;
+  font-weight:bold;
+  font-size:14px;
+}
+button.secondary{background:#22282e;color:#eee}
+button.danger{background:#7d2525;color:white}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:6px 0 10px;
+  border-radius:9px;
+  border:1px solid #343b42;
+  background:#0b0e11;
+  color:white;
+}
+label{font-size:12px;color:#aab1b8}
+.hidden{display:none}
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#101419;
+  border-top:1px solid #292e34;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:10;
+}
+.nav button{
+  background:transparent;
+  color:#aab1b8;
+  margin:0;
+  border-radius:0;
+  padding:11px 4px;
+  font-size:11px;
+}
+.nav button.active{color:#e7b94f}
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  background:#25301f;
+  color:#bce08b;
+}
+.stage{
+  border-left:3px solid #d9a62e;
+  padding:8px 10px;
+  margin:7px 0;
+  background:#181d21;
+  border-radius:7px;
+}
+.lot{
+  font-size:18px;
+  color:#e7b94f;
+  font-weight:bold;
+}
+.alert{
+  border-left:4px solid #d44;
+  background:#251719;
+  padding:10px;
+  border-radius:7px;
+  margin-bottom:8px;
+}
+.success{
+  border-left:4px solid #67b96b;
+  background:#17251a;
+  padding:10px;
+  border-radius:7px;
+}
+#login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.loginBox{
+  width:100%;
+  max-width:390px;
+  background:#11161b;
+  padding:25px;
+  border-radius:18px;
+  border:1px solid #30363d;
+}
+.loginBox h1{
+  color:#e7b94f;
+  text-align:center;
+}
+.center{text-align:center}
+.spacer{height:75px}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:20;
+}
+.modalBox{
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow:auto;
+  background:#11161b;
+  border:1px solid #343b42;
+  border-radius:15px;
+  padding:18px;
+}
+.close{background:#292e34;color:white}
+.item{
+  padding:10px;
+  border-bottom:1px solid #292e34;
+}
+.muted{color:#929aa3;font-size:12px}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="login">
+  <div class="loginBox">
+    <h1>⛏️ MCHIMBAJI SMART</h1>
+    <p class="center muted">Mining Operations & Traceability</p>
+
+    <label>Username</label>
+    <input id="username" value="supervisor">
+
+    <label>PIN</label>
+    <input id="password" type="password" value="1234">
+
+    <button onclick="login()">INGIA KWENYE MFUMO</button>
+
+    <p id="loginMsg" class="center muted"></p>
+
+    <div class="card">
+      <small>Demo accounts</small><br>
+      <span class="muted">Supervisor: supervisor / 1234</span><br>
+      <span class="muted">Owner: owner / 1234</span>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+<header>
+  <div class="logo">⛏️ MCHIMBAJI SMART V2</div>
+  <div class="sub">
+    <span id="roleText"></span> ·
+    <span class="badge">SERVER ONLINE</span>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- DASHBOARD -->
+<section id="page-dashboard">
+
+  <div class="card">
+    <h3>📊 Dashibodi</h3>
+    <p class="muted">Muhtasari wa shughuli za mgodi</p>
+  </div>
+
+  <div class="grid">
+    <div class="stat">
+      <small>Shimoni</small>
+      <b id="bagsMine">0</b>
+    </div>
+
+    <div class="stat">
+      <small>Crusher</small>
+      <b id="bagsCrusher">0</b>
+    </div>
+
+    <div class="stat">
+      <small>Elution</small>
+      <b id="bagsElution">0</b>
+    </div>
+
+    <div class="stat">
+      <small>Gold Recovered</small>
+      <b id="bagsGold">0</b>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💰 Fedha</h3>
+
+    <div class="grid">
+      <div class="stat">
+        <small>Matumizi</small>
+        <b id="totalExpenses">0</b>
+      </div>
+
+      <div class="stat">
+        <small>Mauzo</small>
+        <b id="totalSales">0</b>
+      </div>
+
+      <div class="stat">
+        <small>Net</small>
+        <b id="netCash">0</b>
+      </div>
+
+      <div class="stat">
+        <small>LOTs</small>
+        <b id="totalLots">0</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ Tahadhari</h3>
+    <div id="dashboardAlerts">
+      Hakuna tahadhari.
+    </div>
+  </div>
+
+</section>
+
+
+<!-- TRACEABILITY -->
+<section id="page-trace" class="hidden">
+
+  <div class="card">
+    <h3>📦 Traceability</h3>
+    <button onclick="openModal('batchModal')">
+      + ANZISHA BATCH MPYA SHIMONI
+    </button>
+  </div>
+
+  <div id="batchList"></div>
+
+</section>
+
+
+<!-- EXPENSES -->
+<section id="page-expenses" class="hidden">
+
+  <div class="card">
+    <h3>💸 Matumizi</h3>
+
+    <label>Kategoria</label>
+    <select id="expenseCategory">
+      <option>Dizeli/Mafuta</option>
+      <option>Chakula</option>
+      <option>Vilipuzi/Baruti</option>
+      <option>Matengenezo</option>
+      <option>Mengine</option>
+    </select>
+
+    <label>Kiasi (TZS)</label>
+    <input id="expenseAmount" type="number">
+
+    <label>Maelezo</label>
+    <input id="expenseDescription">
+
+    <button onclick="addExpense()">HIFADHI MATUMIZI</button>
+
+    <div id="expenseMsg"></div>
+  </div>
+
+</section>
+
+
+<!-- OWNER -->
+<section id="page-owner" class="hidden">
+
+  <div class="card">
+    <h3>👑 Owner Control</h3>
+    <p class="muted">
+      Gold recovery, mauzo, mgawanyo na audit.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🪙 Gold Recovery</h3>
+
+    <label>LOT ID</label>
+    <input id="goldLot">
+
+    <label>Grams</label>
+    <input id="goldGrams" type="number" step="0.01">
+
+    <label>Purity %</label>
+    <input id="goldPurity" type="number" step="0.01">
+
+    <button onclick="recoverGold()">REKODI GOLD RECOVERY</button>
+
+    <div id="goldMsg"></div>
+  </div>
+
+  <div class="card">
+    <h3>💵 Sale</h3>
+
+    <label>LOT ID</label>
+    <input id="saleLot">
+
+    <label>Grams</label>
+    <input id="saleGrams" type="number" step="0.01">
+
+    <label>Bei kwa Gram (TZS)</label>
+    <input id="salePrice" type="number">
+
+    <button onclick="makeSale()">REKODI MAUZO</button>
+
+    <div id="saleMsg"></div>
+  </div>
+
+  <div class="card">
+    <h3>⚖️ Mgawanyo</h3>
+
+    <label>Mmiliki %</label>
+    <input id="ownerPct" type="number" value="40">
+
+    <label>Sponsor %</label>
+    <input id="sponsorPct" type="number" value="30">
+
+    <label>Vibarua %</label>
+    <input id="workersPct" type="number" value="30">
+
+    <button onclick="calculateSplit()">HESABU MGAWANYO</button>
+
+    <div id="splitResult"></div>
+  </div>
+
+</section>
+
+<div class="spacer"></div>
+
+</main>
+
+
+<!-- NAV -->
+<nav class="nav">
+  <button id="navDashboard" class="active" onclick="showPage('dashboard')">
+    📊<br>Dash
+  </button>
+
+  <button id="navTrace" onclick="showPage('trace')">
+    📦<br>LOT
+  </button>
+
+  <button id="navExpenses" onclick="showPage('expenses')">
+    💸<br>Gharama
+  </button>
+
+  <button id="navOwner" onclick="showPage('owner')">
+    👑<br>Owner
+  </button>
+</nav>
+
+</section>
+
+
+<!-- BATCH MODAL -->
+<div id="batchModal" class="modal">
+
+  <div class="modalBox">
+
+    <h3>📦 Anzisha Batch Mpya</h3>
+
+    <label>Shimo</label>
+    <input id="batchPit" placeholder="Mfano: Shaft A">
+
+    <label>Mifuko</label>
+    <input id="batchBags" type="number">
+
+    <label>Shift</label>
+    <select id="batchShift">
+      <option>Asubuhi</option>
+      <option>Mchana</option>
+      <option>Usiku</option>
+    </select>
+
+    <label>Kiongozi / Supervisor</label>
+    <input id="batchSupervisor" placeholder="Jina la kiongozi">
+
+    <button onclick="createBatch()">ANZISHA LOT</button>
+
+    <button class="close" onclick="closeModal('batchModal')">
+      FUNGA
+    </button>
+
+    <div id="batchMsg"></div>
+
+  </div>
+</div>
+
+
+<script>
+
+const API = "http://localhost:3000/api";
+
+let currentUser = null;
+
+
+/* =========================
+   GENERAL
+========================= */
+
+function money(n){
+  return Number(n || 0).toLocaleString("sw-TZ");
+}
+
+function showMessage(id,text,success=true){
+  const el=document.getElementById(id);
+  if(!el)return;
+
+  el.innerHTML =
+    `<div class="${success ? "success":"alert"}">${text}</div>`;
+}
+
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+  const username=document.getElementById("username").value.trim();
+  const password=document.getElementById("password").value.trim();
+  const msg=document.getElementById("loginMsg");
+
+  msg.textContent="Inaingia...";
+
+  try{
+
+    const response=await fetch(API+"/login",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        username,
+        password
+      })
+    });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      msg.textContent=data.error || "Login imekataa";
+      return;
+    }
+
+    currentUser=data.user;
+
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+
+    document.getElementById("roleText").textContent=
+      currentUser.role.toUpperCase();
+
+    loadDashboard();
+
+  }catch(error){
+
+    msg.textContent=
+      "Server haipatikani. Hakikisha node server.js bado inaendelea.";
+
+  }
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+  const pages=[
+    "dashboard",
+    "trace",
+    "expenses",
+    "owner"
+  ];
+
+  pages.forEach(p=>{
+    document
+      .getElementById("page-"+p)
+      .classList.add("hidden");
+  });
+
+  document
+    .getElementById("page-"+page)
+    .classList.remove("hidden");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  const nav=document.getElementById(
+    "nav"+page.charAt(0).toUpperCase()+page.slice(1)
+  );
+
+  if(nav)nav.classList.add("active");
+
+  if(page==="dashboard")loadDashboard();
+  if(page==="trace")loadBatches();
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+async function loadDashboard(){
+
+  try{
+
+    const r=await fetch(API+"/dashboard");
+
+    const d=await r.json();
+
+    document.getElementById("bagsMine").textContent=
+      d.bagsAtMine || 0;
+
+    document.getElementById("bagsCrusher").textContent=
+      d.bagsCrusher || 0;
+
+    document.getElementById("bagsElution").textContent=
+      d.bagsElution || 0;
+
+    document.getElementById("bagsGold").textContent=
+      d.bagsRecovered || 0;
+
+    document.getElementById("totalExpenses").textContent=
+      money(d.totalExpenses)+" TZS";
+
+    document.getElementById("totalSales").textContent=
+      money(d.totalSales)+" TZS";
+
+    document.getElementById("netCash").textContent=
+      money(d.net)+" TZS";
+
+    document.getElementById("totalLots").textContent=
+      d.totalBatches || 0;
+
+    const alertBox=
+      document.getElementById("dashboardAlerts");
+
+    if(d.alerts && d.alerts.length){
+
+      alertBox.innerHTML=d.alerts.map(a=>
+        `<div class="alert">
+          ⚠️ ${a.message || a.type}
+        </div>`
+      ).join("");
+
+    }else{
+
+      alertBox.innerHTML=
+        `<div class="success">✓ Hakuna tahadhari mpya.</div>`;
+
+    }
+
+  }catch(e){
+
+    console.log(e);
+
+  }
+}
+
+
+/* =========================
+   CREATE BATCH
+========================= */
+
+async function createBatch(){
+
+  const pit=document.getElementById("batchPit").value.trim();
+  const bags=Number(document.getElementById("batchBags").value);
+  const shift=document.getElementById("batchShift").value;
+  const supervisor=
+    document.getElementById("batchSupervisor").value.trim();
+
+  if(!pit || !bags || !supervisor){
+
+    showMessage(
+      "batchMsg",
+      "Jaza Shimo, Mifuko na Kiongozi.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/batches",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        pit,
+        bags,
+        supervisor,
+        shift,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "batchMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "batchMsg",
+      `LOT ${d.batch.lot_id} imeanzishwa.`,
+      true
+    );
+
+    document.getElementById("batchPit").value="";
+    document.getElementById("batchBags").value="";
+    document.getElementById("batchSupervisor").value="";
+
+    loadDashboard();
+    loadBatches();
+
+  }catch(e){
+
+    showMessage(
+      "batchMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   LOAD BATCHES
+========================= */
+
+async function loadBatches(){
+
+  const box=document.getElementById("batchList");
+
+  box.innerHTML=
+    `<div class="card">Inapakia LOTs...</div>`;
+
+  try{
+
+    const r=await fetch(API+"/batches");
+
+    const data=await r.json();
+
+    if(!data.length){
+
+      box.innerHTML=
+        `<div class="card">Hakuna LOT bado.</div>`;
+
+      return;
+    }
+
+    box.innerHTML=data.map(b=>{
+
+      const history=
+        (b.history || [])
+        .map(h=>
+          `<div class="stage">
+            <b>${h.stage}</b><br>
+            <span class="muted">${h.time}</span>
+          </div>`
+        ).join("");
+
+      return `
+      <div class="card">
+
+        <div class="lot">${b.lot_id}</div>
+
+        <p>
+          ⛏️ ${b.pit}<br>
+          📦 Mifuko: <b>${b.bags}</b><br>
+          🔄 Hatua: <b>${b.stage}</b><br>
+          👤 ${b.supervisor}
+        </p>
+
+        ${history}
+
+        ${
+          b.stage!=="Gold Recovered"
+          ?
+          `<button onclick="moveBatch('${b.lot_id}')">
+            HAMISHA HATUA →
+          </button>`
+          :
+          `<div class="success">
+            ✓ Batch imefika Gold Recovered
+          </div>`
+        }
+
+      </div>
+      `;
+
+    }).join("");
+
+  }catch(e){
+
+    box.innerHTML=
+      `<div class="alert">Server haipatikani.</div>`;
+
+  }
+}
+
+
+/* =========================
+   MOVE BATCH
+========================= */
+
+async function moveBatch(lot){
+
+  const stages=[
+    "Shimoni",
+    "Crusher",
+    "Elution",
+    "Gold Recovered"
+  ];
+
+  const stage=prompt(
+    "Ingiza hatua mpya:\n\n" +
+    "Crusher\nElution\nGold Recovered"
+  );
+
+  if(!stage)return;
+
+  if(!stages.includes(stage)){
+
+    alert("Hatua si sahihi.");
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(
+      API+"/batches/"+encodeURIComponent(lot)+"/move",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          stage,
+          user:currentUser?.username
+        })
+      }
+    );
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      alert(d.error || "Imeshindikana.");
+      return;
+
+    }
+
+    alert("LOT imehamishwa kwenda "+stage);
+
+    loadBatches();
+    loadDashboard();
+
+  }catch(e){
+
+    alert("Server haipatikani.");
+
+  }
+}
+
+
+/* =========================
+   EXPENSE
+========================= */
+
+async function addExpense(){
+
+  const category=
+    document.getElementById("expenseCategory").value;
+
+  const amount=
+    Number(document.getElementById("expenseAmount").value);
+
+  const description=
+    document.getElementById("expenseDescription").value;
+
+  if(!amount){
+
+    showMessage(
+      "expenseMsg",
+      "Weka kiasi cha matumizi.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/expenses",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        category,
+        amount,
+        description,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "expenseMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "expenseMsg",
+      "Matumizi yamehifadhiwa.",
+      true
+    );
+
+    document.getElementById("expenseAmount").value="";
+    document.getElementById("expenseDescription").value="";
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "expenseMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   GOLD RECOVERY
+========================= */
+
+async function recoverGold(){
+
+  const lot=
+    document.getElementById("goldLot").value.trim();
+
+  const grams=
+    Number(document.getElementById("goldGrams").value);
+
+  const purity=
+    Number(document.getElementById("goldPurity").value);
+
+  if(!lot || !grams){
+
+    showMessage(
+      "goldMsg",
+      "Weka LOT ID na grams.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/gold",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        lot_id:lot,
+        grams,
+        purity,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "goldMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "goldMsg",
+      `Gold ${grams}g imehifadhiwa kwenye LOT ${lot}.`,
+      true
+    );
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "goldMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   SALE
+========================= */
+
+async function makeSale(){
+
+  const lot=
+    document.getElementById("saleLot").value.trim();
+
+  const grams=
+    Number(document.getElementById("saleGrams").value);
+
+  const price=
+    Number(document.getElementById("salePrice").value);
+
+  if(!lot || !grams || !price){
+
+    showMessage(
+      "saleMsg",
+      "Jaza LOT, grams na bei.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/sales",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        lot_id:lot,
+        grams,
+        price_per_gram:price,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "saleMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "saleMsg",
+      `Mauzo yamehifadhiwa: ${money(d.sale.total)} TZS`,
+      true
+    );
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "saleMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   SPLIT
+========================= */
+
+async function calculateSplit(){
+
+  const owner=
+    Number(document.getElementById("ownerPct").value);
+
+  const sponsor=
+    Number(document.getElementById("sponsorPct").value);
+
+  const workers=
+    Number(document.getElementById("workersPct").value);
+
+  try{
+
+    const r=await fetch(API+"/split",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        owner,
+        sponsor,
+        workers
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "splitResult",
+        d.error || "Percentages lazima ziwe 100%.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "splitResult",
+      `✓ Mgawanyo umekubalika: Mmiliki ${owner}% · Sponsor ${sponsor}% · Vibarua ${workers}%`,
+      true
+    );
+
+  }catch(e){
+
+    showMessage(
+      "splitResult",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener("load",()=>{
+
+  console.log("Mchimbaji Smart frontend loaded.");
+
+});
+
+</script>
+
+</body>
+</html>
