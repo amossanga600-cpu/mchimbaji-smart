@@ -1,0 +1,104 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Mmiliki",
+      "username": "owner",
+      "password": "1234",
+      "role": "owner"
+    },
+    {
+      "id": 2,
+      "name": "Msimamizi wa Shimo",
+      "username": "supervisor",
+      "password": "1234",
+      "role": "supervisor"
+    }
+  ],
+  "batches": [],
+  "fuel": [],
+  "expenses": [],
+  "dispatches": [],
+  "gold": [],
+  "sales": [],
+  "alerts": [],
+  "audit_logs": [
+    {
+      "id": "AUD-55695638",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:15.638Z"
+    },
+    {
+      "id": "AUD-55697116",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:17.116Z"
+    },
+    {
+      "id": "AUD-55697888",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:17.888Z"
+    },
+    {
+      "id": "AUD-55708947",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:28.947Z"
+    },
+    {
+      "id": "AUD-55716419",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:36.419Z"
+    },
+    {
+      "id": "AUD-55721679",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:41.679Z"
+    },
+    {
+      "id": "AUD-55722636",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:48:42.636Z"
+    },
+    {
+      "id": "AUD-55749948",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:49:09.948Z"
+    },
+    {
+      "id": "AUD-55834763",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:50:34.763Z"
+    },
+    {
+      "id": "AUD-55846341",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:50:46.341Z"
+    },
+    {
+      "id": "AUD-56153563",
+      "action": "LOGIN",
+      "user": "supervisor",
+      "details": "Mtumiaji ameingia kwenye mfumo.",
+      "timestamp": "2026-09-16T10:55:53.566Z"
+    }
+  ]
+}
