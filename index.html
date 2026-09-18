@@ -584,59 +584,130 @@ async function loadDashboard(){
 
   try{
 
-    const r=await fetch(API+"/dashboard");
+    const { data: memberships, error: memberError } =
+      await supabaseClient
+        .from("site_members")
+        .select("site_id, role, mining_sites(id, name)")
+        .eq("user_id", currentUser.id);
 
-    const d=await r.json();
+    if(memberError) throw memberError;
 
-    document.getElementById("bagsMine").textContent=
-      d.bagsAtMine || 0;
+    if(!memberships || !memberships.length){
+      throw new Error("User hana mining site.");
+    }
 
-    document.getElementById("bagsCrusher").textContent=
-      d.bagsCrusher || 0;
+    const siteId = memberships[0].site_id;
 
-    document.getElementById("bagsElution").textContent=
-      d.bagsElution || 0;
+    const [
+      { data: batches, error: batchError },
+      { data: expenses, error: expenseError },
+      { data: sales, error: salesError },
+      { data: alerts, error: alertError }
+    ] = await Promise.all([
 
-    document.getElementById("bagsGold").textContent=
-      d.bagsRecovered || 0;
+      supabaseClient
+        .from("batches")
+        .select("id, lot_id, hatua_sasa, mifuko")
+        .eq("site_id", siteId),
 
-    document.getElementById("totalExpenses").textContent=
-      money(d.totalExpenses)+" TZS";
+      supabaseClient
+        .from("expenses")
+        .select("amount_tzs")
+        .eq("site_id", siteId),
 
-    document.getElementById("totalSales").textContent=
-      money(d.totalSales)+" TZS";
+      supabaseClient
+        .from("sales")
+        .select("total_tzs")
+        .not("batch_id", "is", null),
 
-    document.getElementById("netCash").textContent=
-      money(d.net)+" TZS";
+      supabaseClient
+        .from("alerts")
+        .select("message, severity")
+        .eq("site_id", siteId)
+        .eq("resolved", false)
 
-    document.getElementById("totalLots").textContent=
-      d.totalBatches || 0;
+    ]);
 
-    const alertBox=
+    if(batchError) throw batchError;
+    if(expenseError) throw expenseError;
+    if(salesError) throw salesError;
+    if(alertError) throw alertError;
+
+    const list = batches || [];
+
+    const bagsMine = list
+      .filter(b => b.hatua_sasa === "Shimoni")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsCrusher = list
+      .filter(b => b.hatua_sasa === "Crusher")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsElution = list
+      .filter(b => b.hatua_sasa === "Elution")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsGold = list
+      .filter(b => b.hatua_sasa === "Gold Recovered")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const totalExpenses = (expenses || [])
+      .reduce((sum,e) => sum + Number(e.amount_tzs || 0), 0);
+
+    const totalSales = (sales || [])
+      .reduce((sum,s) => sum + Number(s.total_tzs || 0), 0);
+
+    const net = totalSales - totalExpenses;
+
+    document.getElementById("bagsMine").textContent = bagsMine;
+    document.getElementById("bagsCrusher").textContent = bagsCrusher;
+    document.getElementById("bagsElution").textContent = bagsElution;
+    document.getElementById("bagsGold").textContent = bagsGold;
+
+    document.getElementById("totalExpenses").textContent =
+      money(totalExpenses) + " TZS";
+
+    document.getElementById("totalSales").textContent =
+      money(totalSales) + " TZS";
+
+    document.getElementById("netCash").textContent =
+      money(net) + " TZS";
+
+    document.getElementById("totalLots").textContent =
+      list.length;
+
+    const alertBox =
       document.getElementById("dashboardAlerts");
 
-    if(d.alerts && d.alerts.length){
+    if(alerts && alerts.length){
 
-      alertBox.innerHTML=d.alerts.map(a=>
+      alertBox.innerHTML = alerts.map(a =>
         `<div class="alert">
-          ⚠️ ${a.message || a.type}
+          ⚠️ ${a.message}
         </div>`
       ).join("");
 
     }else{
 
-      alertBox.innerHTML=
+      alertBox.innerHTML =
         `<div class="success">✓ Hakuna tahadhari mpya.</div>`;
 
     }
 
   }catch(e){
 
-    console.log(e);
+    console.error("Dashboard error:", e);
+
+    const alertBox =
+      document.getElementById("dashboardAlerts");
+
+    if(alertBox){
+      alertBox.innerHTML =
+        `<div class="alert">⚠️ Imeshindwa kupakia Dashboard.</div>`;
+    }
 
   }
 }
-
 
 /* =========================
    CREATE BATCH
