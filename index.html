@@ -532,8 +532,8 @@ async function login(){
     loadDashboard();
 
   }catch(error){
-    console.error(error);
-    msg.textContent = "Kuna tatizo la connection. Jaribu tena.";
+    console.error("LOGIN ERROR:", error);
+    msg.textContent = error?.message || "LOGIN ERROR";
   }
   }
 
