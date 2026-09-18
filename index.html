@@ -1,1302 +1,1249 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wakubwa Hub - Maudhui ya Kipekee 18+</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: #0A0A0A;
-            color: #EAEAEA;
-            min-height: 100vh;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1E1E1E;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D4AF37;
-            border-radius: 4px;
-        }
-
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            background: #0A0A0A;
-            padding: 12px 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #1E1E1E;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .logo .wakubwa {
-            color: #D4AF37;
-        }
-
-        .logo .hub {
-            color: #E74C3C;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links li a {
-            color: #888;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 14px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links li a:hover {
-            color: #D4AF37;
-            background: rgba(212, 175, 55, 0.08);
-        }
-
-        .nav-links li a.active {
-            color: #D4AF37;
-            background: rgba(212, 175, 55, 0.12);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #D4AF37, #B8960F);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0A0A0A;
-            font-weight: 700;
-            font-size: 16px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            border: 2px solid transparent;
-        }
-
-        .avatar:hover {
-            transform: scale(1.05);
-            border-color: #D4AF37;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .avatar-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .btn-nav {
-            padding: 8px 20px;
-            border-radius: 25px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .btn-login {
-            background: transparent;
-            color: #D4AF37;
-            border: 1px solid #D4AF37;
-        }
-
-        .btn-login:hover {
-            background: #D4AF37;
-            color: #0A0A0A;
-        }
-
-        .btn-register {
-            background: #D4AF37;
-            color: #0A0A0A;
-        }
-
-        .btn-register:hover {
-            background: #C09A2E;
-            transform: scale(1.05);
-        }
-
-        .btn-logout {
-            background: #E74C3C;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 13px;
-        }
-
-        .btn-logout:hover {
-            background: #C0392B;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 5px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 2.5px;
-            background: #EAEAEA;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            display: block;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 280px;
-            height: 100vh;
-            background: #121212;
-            padding: 80px 30px 30px;
-            transition: right 0.3s ease;
-            z-index: 999;
-            border-left: 1px solid #1E1E1E;
-        }
-
-        .mobile-menu.open {
-            right: 0;
-        }
-
-        .mobile-menu .mobile-user {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #1E1E1E;
-            margin-bottom: 20px;
-        }
-
-        .mobile-menu .mobile-user .avatar-large {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #D4AF37, #B8960F);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0A0A0A;
-            font-weight: 700;
-            font-size: 20px;
-            text-transform: uppercase;
-        }
-
-        .mobile-menu .mobile-user .user-name {
-            color: #EAEAEA;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .mobile-menu .mobile-user .user-email {
-            color: #888;
-            font-size: 13px;
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-        }
-
-        .mobile-menu ul li {
-            margin-bottom: 5px;
-        }
-
-        .mobile-menu ul li a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: #B0B0B0;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 12px 16px;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu ul li a i {
-            width: 20px;
-            color: #666;
-            font-size: 16px;
-        }
-
-        .mobile-menu ul li a:hover {
-            background: rgba(212, 175, 55, 0.08);
-            color: #D4AF37;
-        }
-
-        .mobile-menu ul li a.active {
-            color: #D4AF37;
-            background: rgba(212, 175, 55, 0.12);
-        }
-
-        .mobile-menu ul li a.active i {
-            color: #D4AF37;
-        }
-
-        .mobile-menu .mobile-logout {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #1E1E1E;
-        }
-
-        .menu-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 998;
-        }
-
-        .menu-overlay.active {
-            display: block;
-        }
-
-        /* ===== LOGIN PROMPT OVERLAY ===== */
-        .login-prompt-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-prompt-overlay.active {
-            display: flex;
-        }
-
-        .login-prompt {
-            background: #1A1A1A;
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #2A2A2A;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-prompt .icon {
-            font-size: 48px;
-            color: #D4AF37;
-            margin-bottom: 16px;
-        }
-
-        .login-prompt h2 {
-            font-size: 22px;
-            color: #EAEAEA;
-            margin-bottom: 8px;
-        }
-
-        .login-prompt p {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-
-        .login-prompt .buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .login-prompt .btn-login-prompt {
-            padding: 10px 30px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 14px;
-            border: none;
-        }
-
-        .login-prompt .btn-login-prompt.primary {
-            background: linear-gradient(135deg, #D4AF37, #B8960F);
-            color: #0A0A0A;
-        }
-
-        .login-prompt .btn-login-prompt.primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
-        }
-
-        .login-prompt .btn-login-prompt.secondary {
-            background: transparent;
-            color: #D4AF37;
-            border: 1px solid #D4AF37;
-        }
-
-        .login-prompt .btn-login-prompt.secondary:hover {
-            background: rgba(212, 175, 55, 0.08);
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            width: 85%;
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #2A2A2A;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .hero h1 .wakubwa {
-            color: #D4AF37;
-        }
-
-        .hero h1 .hub {
-            color: #E74C3C;
-        }
-
-        .hero p {
-            color: #888;
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn-hero {
-            padding: 12px 35px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-hero-primary {
-            background: #D4AF37;
-            color: #0A0A0A;
-        }
-
-        .btn-hero-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-hero-secondary {
-            background: transparent;
-            color: #D4AF37;
-            border: 1px solid #D4AF37;
-        }
-
-        .btn-hero-secondary:hover {
-            background: #D4AF37;
-            color: #0A0A0A;
-        }
-
-        /* ===== VIDEO GRID ===== */
-        .container {
-            width: 85%;
-            max-width: 1200px;
-            margin: 0 auto 40px;
-        }
-
-        .section-title {
-            font-size: 28px;
-            margin-bottom: 25px;
-            color: #EAEAEA;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, #D4AF37, transparent);
-        }
-
-        .section-title .view-all {
-            font-size: 14px;
-            color: #D4AF37;
-            text-decoration: none;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .section-title .view-all:hover {
-            color: #FFD700;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-        }
-
-        .video-card {
-            background: #1A1A1A;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 1px solid #2A2A2A;
-            position: relative;
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: #D4AF37;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
-        }
-
-        .video-card .thumbnail-wrapper {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            background: linear-gradient(110deg, #1A1A1A 8%, #232323 18%, #1A1A1A 33%);
-            background-size: 200% 100%;
-            animation: shimmer 1.4s linear infinite;
-        }
-
-        .video-card .thumbnail-wrapper.loaded-bg {
-            animation: none;
-            background: #2C2C2C;
-        }
-
-        @keyframes shimmer {
-            to { background-position-x: -200%; }
-        }
-
-        .video-card .thumbnail-wrapper .video-thumbnail {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: transparent;
-            opacity: 0;
-            transition: opacity 0.35s ease, transform 0.4s ease;
-        }
-
-        .video-card .thumbnail-wrapper .video-thumbnail.loaded {
-            opacity: 1;
-        }
-
-        .video-card:hover .thumbnail-wrapper .video-thumbnail {
-            transform: scale(1.05);
-        }
-
-        .video-card .thumbnail-wrapper .category-badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            color: #D4AF37;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .video-card .thumbnail-wrapper .play-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .video-card:hover .thumbnail-wrapper .play-overlay {
-            opacity: 1;
-        }
-
-        .video-card .thumbnail-wrapper .play-overlay .play-circle {
-            width: 56px;
-            height: 56px;
-            background: rgba(212, 175, 55, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .video-card .thumbnail-wrapper .play-overlay .play-circle i {
-            font-size: 22px;
-            color: #0A0A0A;
-            margin-left: 4px;
-        }
-
-        .video-card .video-info {
-            padding: 15px;
-        }
-
-        .video-card .video-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #EAEAEA;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.4;
-            min-height: 42px;
-        }
-
-        .video-card .video-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #888;
-            font-size: 13px;
-        }
-
-        .video-card .video-meta .views {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .video-card .video-meta .views i {
-            font-size: 12px;
-        }
-
-        .video-lock {
-            color: #E74C3C;
-            font-size: 12px;
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .video-card .video-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .video-card .video-actions .btn-action {
-            padding: 6px 14px;
-            background: transparent;
-            color: #888;
-            border: 1px solid #2A2A2A;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .video-card .video-actions .btn-action:hover {
-            border-color: #D4AF37;
-            color: #D4AF37;
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .video-card .video-actions .btn-action.active {
-            color: #D4AF37;
-            border-color: #D4AF37;
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .video-card .video-actions .btn-action i {
-            font-size: 13px;
-        }
-
-        .call-to-action {
-            width: 85%;
-            max-width: 1200px;
-            margin: 20px auto 40px;
-            padding: 40px;
-            background: linear-gradient(135deg, #1A1A1A, #2A2A2A);
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #2A2A2A;
-        }
-
-        .call-to-action h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-
-        .call-to-action p {
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        .footer {
-            width: 85%;
-            max-width: 1200px;
-            margin: 0 auto 20px;
-            padding: 30px;
-            text-align: center;
-            border-top: 1px solid #1E1E1E;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .footer a {
-            color: #D4AF37;
-            text-decoration: none;
-        }
-
-        @media (max-width: 1024px) {
-            .hero, .container, .call-to-action, .footer {
-                width: 90%;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .video-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 15px;
-            }
-
-            .hero, .container, .call-to-action, .footer {
-                width: 95%;
-            }
-
-            .hero {
-                padding: 40px 20px;
-            }
-
-            .btn-hero {
-                padding: 10px 25px;
-                font-size: 14px;
-            }
-
-            .section-title {
-                font-size: 22px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            .video-card .thumbnail-wrapper .video-thumbnail {
-                height: 160px;
-            }
-
-            .video-card .video-actions .btn-action {
-                font-size: 11px;
-                padding: 5px 10px;
-            }
-
-            .login-prompt {
-                padding: 30px 24px;
-            }
-
-            .login-prompt h2 {
-                font-size: 18px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .video-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-            }
-
-            .hero {
-                padding: 30px 15px;
-            }
-
-            .hero h1 {
-                font-size: 26px;
-            }
-
-            .hero p {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-
-            .btn-hero {
-                padding: 8px 18px;
-                font-size: 13px;
-            }
-
-            .video-card .thumbnail-wrapper .video-thumbnail {
-                height: 120px;
-            }
-
-            .video-card .video-title {
-                font-size: 13px;
-                min-height: 36px;
-            }
-
-            .video-card .video-meta {
-                font-size: 11px;
-            }
-
-            .video-card .video-info {
-                padding: 10px;
-            }
-
-            .video-card .video-actions {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .video-card .video-actions .btn-action {
-                font-size: 11px;
-                padding: 5px 8px;
-            }
-
-            .video-card .thumbnail-wrapper .category-badge {
-                font-size: 9px;
-                padding: 3px 10px;
-            }
-
-            .video-card .thumbnail-wrapper .play-overlay .play-circle {
-                width: 40px;
-                height: 40px;
-            }
-
-            .video-card .thumbnail-wrapper .play-overlay .play-circle i {
-                font-size: 16px;
-            }
-
-            .call-to-action {
-                padding: 25px 15px;
-            }
-
-            .call-to-action h2 {
-                font-size: 20px;
-            }
-
-            .login-prompt {
-                padding: 24px 16px;
-            }
-
-            .login-prompt .icon {
-                font-size: 36px;
-            }
-
-            .login-prompt h2 {
-                font-size: 16px;
-            }
-
-            .login-prompt .btn-login-prompt {
-                padding: 8px 20px;
-                font-size: 13px;
-                width: 100%;
-            }
-
-            .login-prompt .buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0d0f">
+<title>Mchimbaji Smart V2</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#080a0c;
+  color:#eee;
+}
+header{
+  background:#101419;
+  border-bottom:1px solid #292e34;
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.logo{font-size:21px;font-weight:bold;color:#e7b94f}
+.sub{font-size:12px;color:#8d969f;margin-top:4px}
+.container{padding:14px;max-width:700px;margin:auto}
+.card{
+  background:#11161b;
+  border:1px solid #282e35;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:12px;
+}
+.card h3{margin:0 0 12px;color:#e7b94f}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.stat{
+  background:#171c21;
+  border-radius:12px;
+  padding:13px;
+  border:1px solid #282e35;
+}
+.stat small{color:#929aa3}
+.stat b{display:block;font-size:22px;margin-top:6px}
+button{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  padding:13px;
+  margin-top:8px;
+  background:#d9a62e;
+  color:#111;
+  font-weight:bold;
+  font-size:14px;
+}
+button.secondary{background:#22282e;color:#eee}
+button.danger{background:#7d2525;color:white}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:6px 0 10px;
+  border-radius:9px;
+  border:1px solid #343b42;
+  background:#0b0e11;
+  color:white;
+}
+label{font-size:12px;color:#aab1b8}
+.hidden{display:none}
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#101419;
+  border-top:1px solid #292e34;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  z-index:10;
+}
+.nav button{
+  background:transparent;
+  color:#aab1b8;
+  margin:0;
+  border-radius:0;
+  padding:11px 4px;
+  font-size:11px;
+}
+.nav button.active{color:#e7b94f}
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:11px;
+  background:#25301f;
+  color:#bce08b;
+}
+.stage{
+  border-left:3px solid #d9a62e;
+  padding:8px 10px;
+  margin:7px 0;
+  background:#181d21;
+  border-radius:7px;
+}
+.lot{
+  font-size:18px;
+  color:#e7b94f;
+  font-weight:bold;
+}
+.alert{
+  border-left:4px solid #d44;
+  background:#251719;
+  padding:10px;
+  border-radius:7px;
+  margin-bottom:8px;
+}
+.success{
+  border-left:4px solid #67b96b;
+  background:#17251a;
+  padding:10px;
+  border-radius:7px;
+}
+#login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.loginBox{
+  width:100%;
+  max-width:390px;
+  background:#11161b;
+  padding:25px;
+  border-radius:18px;
+  border:1px solid #30363d;
+}
+.loginBox h1{
+  color:#e7b94f;
+  text-align:center;
+}
+.center{text-align:center}
+.spacer{height:75px}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:20;
+}
+.modalBox{
+  width:100%;
+  max-width:500px;
+  max-height:90vh;
+  overflow:auto;
+  background:#11161b;
+  border:1px solid #343b42;
+  border-radius:15px;
+  padding:18px;
+}
+.close{background:#292e34;color:white}
+.item{
+  padding:10px;
+  border-bottom:1px solid #292e34;
+}
+.muted{color:#929aa3;font-size:12px}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://arhougmxlqdxgdqlszyc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_0EeIjPBeYjtfOdlsCgoBpA_wm8yxtsQ";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+</script>
 </head>
+
 <body>
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="index.php" class="logo">
-                <span class="wakubwa">Wakubwa</span><span class="hub">Hub</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.php" class="active">Home</a></li>
-                <li><a href="videos.php"><i class="fas fa-video" style="margin-right: 6px; font-size: 12px;"></i>Videos</a></li>
-                <li><a href="favorites.php"><i class="fas fa-heart" style="margin-right: 6px; font-size: 12px;"></i>Favorites</a></li>
-                <li><a href="watchlater.php"><i class="fas fa-clock" style="margin-right: 6px; font-size: 12px;"></i>Watch Later</a></li>
-                <li><a href="history.php"><i class="fas fa-history" style="margin-right: 6px; font-size: 12px;"></i>History</a></li>
-            </ul>
-        </div>
-        <div class="nav-right">
-                            <a href="login.php" class="btn-nav btn-login">Login</a>
-                <a href="register.php" class="btn-nav btn-register">Register</a>
-                    </div>
 
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+<!-- LOGIN -->
+<section id="login">
+  <div class="loginBox">
+    <h1>⛏️ MCHIMBAJI SMART</h1>
+    <p class="center muted">Mining Operations & Traceability</p>
 
-    <!-- ===== MOBILE MENU ===== -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-                
-        <ul>
-            <li><a href="index.php" class="active"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="videos.php"><i class="fas fa-video"></i> Videos</a></li>
-            <li><a href="favorites.php"><i class="fas fa-heart"></i> Favorites</a></li>
-            <li><a href="watchlater.php"><i class="fas fa-clock"></i> Watch Later</a></li>
-            <li><a href="history.php"><i class="fas fa-history"></i> History</a></li>
-                            <li><a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                <li><a href="register.php"><i class="fas fa-user-plus"></i> Register</a></li>
-                    </ul>
+    <label>Username</label>
+    <input id="username" value="supervisor">
+
+    <label>PIN</label>
+    <input id="password" type="password" value="1234">
+
+    <button onclick="login()">INGIA KWENYE MFUMO</button>
+
+    <p id="loginMsg" class="center muted"></p>
+
+    <div class="card">
+      <small>Demo accounts</small><br>
+      <span class="muted">Supervisor: supervisor / 1234</span><br>
+      <span class="muted">Owner: owner / 1234</span>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+<header>
+  <div class="logo">⛏️ MCHIMBAJI SMART V2</div>
+  <div class="sub">
+    <span id="roleText"></span> ·
+    <span class="badge">SERVER ONLINE</span>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- DASHBOARD -->
+<section id="page-dashboard">
+
+  <div class="card">
+    <h3>📊 Dashibodi</h3>
+    <p class="muted">Muhtasari wa shughuli za mgodi</p>
+  </div>
+
+  <div class="grid">
+    <div class="stat">
+      <small>Shimoni</small>
+      <b id="bagsMine">0</b>
     </div>
 
-    <!-- ===== LOGIN PROMPT OVERLAY ===== -->
-    <div class="login-prompt-overlay" id="loginPrompt">
-        <div class="login-prompt">
-            <div class="icon">
-                <i class="fas fa-lock"></i>
-            </div>
-            <h2>Login Required</h2>
-            <p>You need to be logged in to watch videos. Please login or create an account.</p>
-            <div class="buttons">
-                <a href="login.php" class="btn-login-prompt primary">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </a>
-                <a href="register.php" class="btn-login-prompt secondary">
-                    <i class="fas fa-user-plus"></i> Register
-                </a>
-            </div>
-        </div>
+    <div class="stat">
+      <small>Crusher</small>
+      <b id="bagsCrusher">0</b>
     </div>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-        <h1>
-            <span class="wakubwa">Wakubwa</span><span class="hub">Hub</span>
-        </h1>
-        <p>Maudhui ya kipekee 18+ yaliyochaguliwa kwa ajili yako. Tazama, jipendelee, na urudi tena!</p>
-        <div class="hero-buttons">
-            <a href="videos.php" class="btn-hero btn-hero-primary">
-                <i class="fas fa-play"></i> Tazama Sasa
-            </a>
-                            <a href="register.php" class="btn-hero btn-hero-secondary">
-                    <i class="fas fa-user-plus"></i> Jiunge Bure
-                </a>
-                    </div>
-    </section>
-
-    <!-- ===== VIDEO GRID ===== -->
-    <div class="container" id="videos">
-        <h2 class="section-title">
-            <i class="fas fa-fire" style="color: #D4AF37;"></i> Video Zinazopendekezwa
-            <a href="videos.php" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
-        </h2>
-        <div class="video-grid">
-                                        <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(194)">
-                        <img src="uploads/thumbnails/1789230731_6aa57e8baaa32.png" 
-                             alt="Kitchen surprise for hot stepmom in satin" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> sex style                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Kitchen surprise for hot stepmom in satin</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 0                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                            <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(56)">
-                        <img src="uploads/thumbnails/1786808256_6a8087c0bc40b.png" 
-                             alt="Pulsion (2014)" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> sex movie                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Pulsion (2014)</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 34                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                            <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(168)">
-                        <img src="uploads/thumbnails/1788797902_6a9ee3ce07c51.png" 
-                             alt="Gentle Blowjob And Cock Riding With Beautiful Ass" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> bed sex                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Gentle Blowjob And Cock Riding With Beautiful Ass</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 1                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                            <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(83)">
-                        <img src="uploads/thumbnails/1787257086_6a8760fe4aa13.png" 
-                             alt="Stunning Jasmine Lets Her Boss Lick And Fuck Her Black Pussy At The Office" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> Ebony sex                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Stunning Jasmine Lets Her Boss Lick And Fuck Her Black Pussy At The Office</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 9                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                            <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(159)">
-                        <img src="uploads/thumbnails/1788536374_6a9ae636e4c89.png" 
-                             alt="Young, inexperienced Maid HAS to fuck Boss to keep her job" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> sex style                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Young, inexperienced Maid HAS to fuck Boss to keep her job</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 6                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                            <div class="video-card">
-                    <div class="thumbnail-wrapper" onclick="handleVideoClick(65)">
-                        <img src="uploads/thumbnails/1787084100_6a84bd440507d.png" 
-                             alt="Friends Mom Fucks Me On Her Anniversary!!! DunkenHina Cheats With Young Guy" 
-                             class="video-thumbnail"
-                             width="260" height="200"
-                             decoding="async"
-                             loading="eager" fetchpriority="high"                             onload="this.classList.add('loaded'); this.closest('.thumbnail-wrapper').classList.add('loaded-bg')"
-                             onerror="this.closest('.thumbnail-wrapper').classList.add('loaded-bg')">
-                                                    <span class="category-badge">
-                                <i class="fas fa-tag"></i> hot sex                            </span>
-                                                <div class="play-overlay">
-                            <div class="play-circle">
-                                <i class="fas fa-play"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">Friends Mom Fucks Me On Her Anniversary!!! DunkenHina Cheats With Young Guy</div>
-                        <div class="video-meta">
-                            <span class="views">
-                                <i class="fas fa-eye"></i> 4                            </span>
-                        </div>
-                                                    <div class="video-lock">
-                                <i class="fas fa-lock"></i> Login to watch
-                            </div>
-                                                <div class="video-actions">
-                                                    </div>
-                    </div>
-                </div>
-                    </div>
+    <div class="stat">
+      <small>Elution</small>
+      <b id="bagsElution">0</b>
     </div>
 
-    <!-- ===== CALL TO ACTION ===== -->
-    <section class="call-to-action">
-        <h2>
-            <i class="fas fa-bullhorn" style="color: #D4AF37;"></i> Huwezi kuona video zote?
-        </h2>
+    <div class="stat">
+      <small>Gold Recovered</small>
+      <b id="bagsGold">0</b>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💰 Fedha</h3>
+
+    <div class="grid">
+      <div class="stat">
+        <small>Matumizi</small>
+        <b id="totalExpenses">0</b>
+      </div>
+
+      <div class="stat">
+        <small>Mauzo</small>
+        <b id="totalSales">0</b>
+      </div>
+
+      <div class="stat">
+        <small>Net</small>
+        <b id="netCash">0</b>
+      </div>
+
+      <div class="stat">
+        <small>LOTs</small>
+        <b id="totalLots">0</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⚠️ Tahadhari</h3>
+    <div id="dashboardAlerts">
+      Hakuna tahadhari.
+    </div>
+  </div>
+
+</section>
+
+
+<!-- TRACEABILITY -->
+<section id="page-trace" class="hidden">
+
+  <div class="card">
+    <h3>📦 Traceability</h3>
+    <button onclick="openModal('batchModal')">
+      + ANZISHA BATCH MPYA SHIMONI
+    </button>
+  </div>
+
+  <div id="batchList"></div>
+
+</section>
+
+
+<!-- EXPENSES -->
+<section id="page-expenses" class="hidden">
+
+  <div class="card">
+    <h3>💸 Matumizi</h3>
+
+    <label>Kategoria</label>
+    <select id="expenseCategory">
+      <option>Dizeli/Mafuta</option>
+      <option>Chakula</option>
+      <option>Vilipuzi/Baruti</option>
+      <option>Matengenezo</option>
+      <option>Mengine</option>
+    </select>
+
+    <label>Kiasi (TZS)</label>
+    <input id="expenseAmount" type="number">
+
+    <label>Maelezo</label>
+    <input id="expenseDescription">
+
+    <button onclick="addExpense()">HIFADHI MATUMIZI</button>
+
+    <div id="expenseMsg"></div>
+  </div>
+
+</section>
+
+
+<!-- OWNER -->
+<section id="page-owner" class="hidden">
+
+  <div class="card">
+    <h3>👑 Owner Control</h3>
+    <p class="muted">
+      Gold recovery, mauzo, mgawanyo na audit.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🪙 Gold Recovery</h3>
+
+    <label>LOT ID</label>
+    <input id="goldLot">
+
+    <label>Grams</label>
+    <input id="goldGrams" type="number" step="0.01">
+
+    <label>Purity %</label>
+    <input id="goldPurity" type="number" step="0.01">
+
+    <button onclick="recoverGold()">REKODI GOLD RECOVERY</button>
+
+    <div id="goldMsg"></div>
+  </div>
+
+  <div class="card">
+    <h3>💵 Sale</h3>
+
+    <label>LOT ID</label>
+    <input id="saleLot">
+
+    <label>Grams</label>
+    <input id="saleGrams" type="number" step="0.01">
+
+    <label>Bei kwa Gram (TZS)</label>
+    <input id="salePrice" type="number">
+
+    <button onclick="makeSale()">REKODI MAUZO</button>
+
+    <div id="saleMsg"></div>
+  </div>
+
+  <div class="card">
+    <h3>⚖️ Mgawanyo</h3>
+
+    <label>Mmiliki %</label>
+    <input id="ownerPct" type="number" value="40">
+
+    <label>Sponsor %</label>
+    <input id="sponsorPct" type="number" value="30">
+
+    <label>Vibarua %</label>
+    <input id="workersPct" type="number" value="30">
+
+    <button onclick="calculateSplit()">HESABU MGAWANYO</button>
+
+    <div id="splitResult"></div>
+  </div>
+
+</section>
+
+<div class="spacer"></div>
+
+</main>
+
+
+<!-- NAV -->
+<nav class="nav">
+  <button id="navDashboard" class="active" onclick="showPage('dashboard')">
+    📊<br>Dash
+  </button>
+
+  <button id="navTrace" onclick="showPage('trace')">
+    📦<br>LOT
+  </button>
+
+  <button id="navExpenses" onclick="showPage('expenses')">
+    💸<br>Gharama
+  </button>
+
+  <button id="navOwner" onclick="showPage('owner')">
+    👑<br>Owner
+  </button>
+</nav>
+
+</section>
+
+
+<!-- BATCH MODAL -->
+<div id="batchModal" class="modal">
+
+  <div class="modalBox">
+
+    <h3>📦 Anzisha Batch Mpya</h3>
+
+    <label>Shimo</label>
+    <input id="batchPit" placeholder="Mfano: Shaft A">
+
+    <label>Mifuko</label>
+    <input id="batchBags" type="number">
+
+    <label>Shift</label>
+    <select id="batchShift">
+      <option>Asubuhi</option>
+      <option>Mchana</option>
+      <option>Usiku</option>
+    </select>
+
+    <label>Kiongozi / Supervisor</label>
+    <input id="batchSupervisor" placeholder="Jina la kiongozi">
+
+    <button onclick="createBatch()">ANZISHA LOT</button>
+
+    <button class="close" onclick="closeModal('batchModal')">
+      FUNGA
+    </button>
+
+    <div id="batchMsg"></div>
+
+  </div>
+</div>
+
+
+<script>
+
+  const API = "https://mchimbaji-smart.onrender.com/api";
+
+let currentUser = null;
+
+
+/* =========================
+   GENERAL
+========================= */
+
+function money(n){
+  return Number(n || 0).toLocaleString("sw-TZ");
+}
+
+function showMessage(id,text,success=true){
+  const el=document.getElementById(id);
+  if(!el)return;
+
+  el.innerHTML =
+    `<div class="${success ? "success":"alert"}">${text}</div>`;
+}
+
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+
+function closeModal(id){
+  document.getElementById(id).style.display="none";
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("loginMsg");
+
+  msg.textContent = "Inaingia...";
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: username,
+      password: password
+    });
+
+    if(error){
+      msg.textContent = error.message || "Email au password si sahihi.";
+      return;
+    }
+
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from("profiles")
+        .select("id, full_name, phone, role")
+        .eq("id", data.user.id)
+        .single();
+
+    if(profileError){
+      await supabaseClient.auth.signOut();
+      msg.textContent = "Profile ya user haijapatikana.";
+      return;
+    }
+
+    currentUser = profile;
+
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+
+    document.getElementById("roleText").textContent =
+      currentUser.role.toUpperCase();
+
+    loadDashboard();
+
+  }catch(error){
+    console.error("LOGIN ERROR:", error);
+    msg.textContent = error?.message || "LOGIN ERROR";
+  }
+  }
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page){
+
+  const pages=[
+    "dashboard",
+    "trace",
+    "expenses",
+    "owner"
+  ];
+
+  pages.forEach(p=>{
+    document
+      .getElementById("page-"+p)
+      .classList.add("hidden");
+  });
+
+  document
+    .getElementById("page-"+page)
+    .classList.remove("hidden");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  const nav=document.getElementById(
+    "nav"+page.charAt(0).toUpperCase()+page.slice(1)
+  );
+
+  if(nav)nav.classList.add("active");
+
+  if(page==="dashboard")loadDashboard();
+  if(page==="trace")loadBatches();
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+async function loadDashboard(){
+
+  try{
+
+    const { data: memberships, error: memberError } =
+      await supabaseClient
+        .from("site_members")
+        .select("site_id, role, mining_sites(id, name)")
+        .eq("user_id", currentUser.id);
+
+    if(memberError) throw memberError;
+
+    if(!memberships || !memberships.length){
+      throw new Error("User hana mining site.");
+    }
+
+    const siteId = memberships[0].site_id;
+
+    const [
+      { data: batches, error: batchError },
+      { data: expenses, error: expenseError },
+      { data: sales, error: salesError },
+      { data: alerts, error: alertError }
+    ] = await Promise.all([
+
+      supabaseClient
+        .from("batches")
+        .select("id, lot_id, hatua_sasa, mifuko")
+        .eq("site_id", siteId),
+
+      supabaseClient
+        .from("expenses")
+        .select("amount_tzs")
+        .eq("site_id", siteId),
+
+      supabaseClient
+        .from("sales")
+        .select("total_tzs")
+        .not("batch_id", "is", null),
+
+      supabaseClient
+        .from("alerts")
+        .select("message, severity")
+        .eq("site_id", siteId)
+        .eq("resolved", false)
+
+    ]);
+
+    if(batchError) throw batchError;
+    if(expenseError) throw expenseError;
+    if(salesError) throw salesError;
+    if(alertError) throw alertError;
+
+    const list = batches || [];
+
+    const bagsMine = list
+      .filter(b => b.hatua_sasa === "Shimoni")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsCrusher = list
+      .filter(b => b.hatua_sasa === "Crusher")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsElution = list
+      .filter(b => b.hatua_sasa === "Elution")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const bagsGold = list
+      .filter(b => b.hatua_sasa === "Gold Recovered")
+      .reduce((sum,b) => sum + Number(b.mifuko || 0), 0);
+
+    const totalExpenses = (expenses || [])
+      .reduce((sum,e) => sum + Number(e.amount_tzs || 0), 0);
+
+    const totalSales = (sales || [])
+      .reduce((sum,s) => sum + Number(s.total_tzs || 0), 0);
+
+    const net = totalSales - totalExpenses;
+
+    document.getElementById("bagsMine").textContent = bagsMine;
+    document.getElementById("bagsCrusher").textContent = bagsCrusher;
+    document.getElementById("bagsElution").textContent = bagsElution;
+    document.getElementById("bagsGold").textContent = bagsGold;
+
+    document.getElementById("totalExpenses").textContent =
+      money(totalExpenses) + " TZS";
+
+    document.getElementById("totalSales").textContent =
+      money(totalSales) + " TZS";
+
+    document.getElementById("netCash").textContent =
+      money(net) + " TZS";
+
+    document.getElementById("totalLots").textContent =
+      list.length;
+
+    const alertBox =
+      document.getElementById("dashboardAlerts");
+
+    if(alerts && alerts.length){
+
+      alertBox.innerHTML = alerts.map(a =>
+        `<div class="alert">
+          ⚠️ ${a.message}
+        </div>`
+      ).join("");
+
+    }else{
+
+      alertBox.innerHTML =
+        `<div class="success">✓ Hakuna tahadhari mpya.</div>`;
+
+    }
+
+  }catch(e){
+
+    console.error("Dashboard error:", e);
+
+    const alertBox =
+      document.getElementById("dashboardAlerts");
+
+    if(alertBox){
+      alertBox.innerHTML =
+        `<div class="alert">⚠️ Imeshindwa kupakia Dashboard.</div>`;
+    }
+
+  }
+}
+
+/* =========================
+   CREATE BATCH
+========================= */
+
+async function createBatch(){
+
+  const pit=document.getElementById("batchPit").value.trim();
+  const bags=Number(document.getElementById("batchBags").value);
+  const shift=document.getElementById("batchShift").value;
+  const supervisor=
+    document.getElementById("batchSupervisor").value.trim();
+
+  if(!pit || !bags || !supervisor){
+
+    showMessage(
+      "batchMsg",
+      "Jaza Shimo, Mifuko na Kiongozi.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/batches",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        pit,
+        bags,
+        supervisor,
+        shift,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "batchMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "batchMsg",
+      `LOT ${d.batch.lot_id} imeanzishwa.`,
+      true
+    );
+
+    document.getElementById("batchPit").value="";
+    document.getElementById("batchBags").value="";
+    document.getElementById("batchSupervisor").value="";
+
+    loadDashboard();
+    loadBatches();
+
+  }catch(e){
+
+    showMessage(
+      "batchMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   LOAD BATCHES
+========================= */
+
+async function loadBatches(){
+
+  const box=document.getElementById("batchList");
+
+  box.innerHTML=
+    `<div class="card">Inapakia LOTs...</div>`;
+
+  try{
+
+    const r=await fetch(API+"/batches");
+
+    const data=await r.json();
+
+    if(!data.length){
+
+      box.innerHTML=
+        `<div class="card">Hakuna LOT bado.</div>`;
+
+      return;
+    }
+
+    box.innerHTML=data.map(b=>{
+
+      const history=
+        (b.history || [])
+        .map(h=>
+          `<div class="stage">
+            <b>${h.stage}</b><br>
+            <span class="muted">${h.time}</span>
+          </div>`
+        ).join("");
+
+      return `
+      <div class="card">
+
+        <div class="lot">${b.lot_id}</div>
+
         <p>
-                            Ingia au Jisajili ili kupata ufikiaji wa video zetu zote.
-                    </p>
-                    <div class="hero-buttons">
-                <a href="login.php" class="btn-hero btn-hero-primary">
-                    <i class="fas fa-sign-in-alt"></i> Ingia Sasa
-                </a>
-                <a href="register.php" class="btn-hero btn-hero-secondary">
-                    <i class="fas fa-user-plus"></i> Jisajili                </a>
-            </div>
-            </section>
-
-    <!-- ===== FOOTER ===== -->
-    <footer class="footer">
-        <p>© 2026 <span class="wakubwa" style="color: #D4AF37;">Wakubwa</span><span class="hub" style="color: #E74C3C;">Hub</span> | Maudhui ya watu wazima 18+</p>
-        <p style="margin-top: 10px;">
-            <a href="#">Sera ya Faragha</a> | 
-            <a href="#">Masharti</a> | 
-            <a href="#">Wasiliana Nasi</a>
+          ⛏️ ${b.pit}<br>
+          📦 Mifuko: <b>${b.bags}</b><br>
+          🔄 Hatua: <b>${b.stage}</b><br>
+          👤 ${b.supervisor}
         </p>
-    </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const overlay = document.getElementById('menuOverlay');
+        ${history}
 
-            function toggleMenu() {
-                hamburger.classList.toggle('active');
-                mobileMenu.classList.toggle('open');
-                overlay.classList.toggle('active');
-                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-            }
-
-            hamburger.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
-
-            document.querySelectorAll('.mobile-menu a').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (mobileMenu.classList.contains('open')) {
-                        toggleMenu();
-                    }
-                });
-            });
-
-            // ===== VIDEO CARDS ANIMATION =====
-            const cards = document.querySelectorAll('.video-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.5s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 100 * index);
-            });
-        });
-
-        // ===== HANDLE VIDEO CLICK =====
-        function handleVideoClick(videoId) {
-                            document.getElementById('loginPrompt').classList.add('active');
-                    }
-
-        // ===== CLOSE LOGIN PROMPT =====
-        document.addEventListener('click', function(e) {
-            const prompt = document.getElementById('loginPrompt');
-            if (e.target === prompt) {
-                prompt.classList.remove('active');
-            }
-        });
-
-        // ===== TOGGLE FAVORITE =====
-        function toggleFavorite(videoId) {
-                            document.getElementById('loginPrompt').classList.add('active');
-                return;
-                        
-            fetch('ajax.php?action=favorite&video_id=' + videoId)
-                .then(response => response.json())
-                .then(data => {
-                    if(data.message) {
-                        location.reload();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Something went wrong. Please try again.');
-                });
+        ${
+          b.stage!=="Gold Recovered"
+          ?
+          `<button onclick="moveBatch('${b.lot_id}')">
+            HAMISHA HATUA →
+          </button>`
+          :
+          `<div class="success">
+            ✓ Batch imefika Gold Recovered
+          </div>`
         }
 
-        // ===== TOGGLE WATCH LATER =====
-        function toggleWatchLater(videoId) {
-                            document.getElementById('loginPrompt').classList.add('active');
-                return;
-                        
-            fetch('ajax.php?action=watchlater&video_id=' + videoId)
-                .then(response => response.json())
-                .then(data => {
-                    if(data.message) {
-                        location.reload();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Something went wrong. Please try again.');
-                });
-        }
-    </script>
+      </div>
+      `;
+
+    }).join("");
+
+  }catch(e){
+
+    box.innerHTML=
+      `<div class="alert">Server haipatikani.</div>`;
+
+  }
+}
+
+
+/* =========================
+   MOVE BATCH
+========================= */
+
+async function moveBatch(lot){
+
+  const stages=[
+    "Shimoni",
+    "Crusher",
+    "Elution",
+    "Gold Recovered"
+  ];
+
+  const stage=prompt(
+    "Ingiza hatua mpya:\n\n" +
+    "Crusher\nElution\nGold Recovered"
+  );
+
+  if(!stage)return;
+
+  if(!stages.includes(stage)){
+
+    alert("Hatua si sahihi.");
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(
+      API+"/batches/"+encodeURIComponent(lot)+"/move",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          stage,
+          user:currentUser?.username
+        })
+      }
+    );
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      alert(d.error || "Imeshindikana.");
+      return;
+
+    }
+
+    alert("LOT imehamishwa kwenda "+stage);
+
+    loadBatches();
+    loadDashboard();
+
+  }catch(e){
+
+    alert("Server haipatikani.");
+
+  }
+}
+
+
+/* =========================
+   EXPENSE
+========================= */
+
+async function addExpense(){
+
+  const category=
+    document.getElementById("expenseCategory").value;
+
+  const amount=
+    Number(document.getElementById("expenseAmount").value);
+
+  const description=
+    document.getElementById("expenseDescription").value;
+
+  if(!amount){
+
+    showMessage(
+      "expenseMsg",
+      "Weka kiasi cha matumizi.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/expenses",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        category,
+        amount,
+        description,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "expenseMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "expenseMsg",
+      "Matumizi yamehifadhiwa.",
+      true
+    );
+
+    document.getElementById("expenseAmount").value="";
+    document.getElementById("expenseDescription").value="";
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "expenseMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   GOLD RECOVERY
+========================= */
+
+async function recoverGold(){
+
+  const lot=
+    document.getElementById("goldLot").value.trim();
+
+  const grams=
+    Number(document.getElementById("goldGrams").value);
+
+  const purity=
+    Number(document.getElementById("goldPurity").value);
+
+  if(!lot || !grams){
+
+    showMessage(
+      "goldMsg",
+      "Weka LOT ID na grams.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/gold",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        lot_id:lot,
+        grams,
+        purity,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "goldMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "goldMsg",
+      `Gold ${grams}g imehifadhiwa kwenye LOT ${lot}.`,
+      true
+    );
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "goldMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   SALE
+========================= */
+
+async function makeSale(){
+
+  const lot=
+    document.getElementById("saleLot").value.trim();
+
+  const grams=
+    Number(document.getElementById("saleGrams").value);
+
+  const price=
+    Number(document.getElementById("salePrice").value);
+
+  if(!lot || !grams || !price){
+
+    showMessage(
+      "saleMsg",
+      "Jaza LOT, grams na bei.",
+      false
+    );
+
+    return;
+  }
+
+  try{
+
+    const r=await fetch(API+"/sales",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        lot_id:lot,
+        grams,
+        price_per_gram:price,
+        user:currentUser?.username
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "saleMsg",
+        d.error || "Imeshindikana.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "saleMsg",
+      `Mauzo yamehifadhiwa: ${money(d.sale.total)} TZS`,
+      true
+    );
+
+    loadDashboard();
+
+  }catch(e){
+
+    showMessage(
+      "saleMsg",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   SPLIT
+========================= */
+
+async function calculateSplit(){
+
+  const owner=
+    Number(document.getElementById("ownerPct").value);
+
+  const sponsor=
+    Number(document.getElementById("sponsorPct").value);
+
+  const workers=
+    Number(document.getElementById("workersPct").value);
+
+  try{
+
+    const r=await fetch(API+"/split",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        owner,
+        sponsor,
+        workers
+      })
+
+    });
+
+    const d=await r.json();
+
+    if(!r.ok){
+
+      showMessage(
+        "splitResult",
+        d.error || "Percentages lazima ziwe 100%.",
+        false
+      );
+
+      return;
+    }
+
+    showMessage(
+      "splitResult",
+      `✓ Mgawanyo umekubalika: Mmiliki ${owner}% · Sponsor ${sponsor}% · Vibarua ${workers}%`,
+      true
+    );
+
+  }catch(e){
+
+    showMessage(
+      "splitResult",
+      "Server haipatikani.",
+      false
+    );
+
+  }
+}
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener("load",()=>{
+
+  console.log("Mchimbaji Smart frontend loaded.");
+
+});
+
+</script>
+
 </body>
 </html>
